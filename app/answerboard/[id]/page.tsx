@@ -1,5 +1,4 @@
 import {db} from '@/lib/db';
-import Answer from '@/components/Answer';
 import GamePart from '@/components/GamePart';
 
 export default async function QuestionPage({params}: {params: Promise<{id: string}>}) {

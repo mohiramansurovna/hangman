@@ -23,21 +23,3 @@ export async function POST(req: NextRequest) {
         return NextResponse.json('Failed to submit question', {status: 500});
     }
 }
-
-export async function GET(req: NextRequest,{ params }: { params: Promise<{ id: string }> }) {
-    const id=(await params).id;
-    if (!id) return NextResponse.json('Missing id', {status: 400});
-    try {
-        const question = await db.question.findUnique({
-            where: {
-                id: id,
-            },
-        });
-        if (!question) {
-            return NextResponse.json('Question not found', {status: 404});
-        }
-        return NextResponse.json(question, {status: 200});
-    } catch {
-        return NextResponse.json('Failed to get question', {status: 500});
-    }
-}
