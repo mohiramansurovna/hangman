@@ -1,14 +1,14 @@
 import {db} from '@/lib/db';
-import GamePart from '@/components/GamePart';
+import QuestionList from '@/components/QuestionList';
 
 export default async function QuestionPage({params}: {params: Promise<{id: string}>}) {
     const id = (await params).id;
-    const question = await db.question.findUnique({
+    const questions = await db.questions.findUnique({
         where: {id: id},
+        include: {questions: true},
     });
-
-    if (!question) {
-        return <div>Question not found</div>;
+    if (!questions) {
+        return <div>Questions not found</div>;
     }
 
     const svgData = (
@@ -26,8 +26,63 @@ export default async function QuestionPage({params}: {params: Promise<{id: strin
             />
         </svg>
     );
+    const winSvg = (
+        <svg
+            viewBox='0 0 100 100'
+            preserveAspectRatio='none'
+            className='w-screen h-screen absolute'>
+            <g>
+                <rect x="40" y="-20" width="1" height="4" fill="blue">
+                    <animate attributeName="y" from="-20" to="100" dur="3s" begin="0s" repeatCount="indefinite"/>
+                </rect>
+                <rect x="15" y="-20" width="1" height="4" fill="yellow">
+                    <animate attributeName="y" from="-20" to="100" dur="3s" begin="0.2s" repeatCount="indefinite"/>
+                </rect>
+                <rect x="50" y="-20" width="1" height="4" fill="red">
+                    <animate attributeName="y" from="-20" to="100" dur="3s" begin="0.4s" repeatCount="indefinite"/>
+                </rect>
+                <rect x="25" y="-20" width="1" height="4" fill="green">
+                    <animate attributeName="y" from="-20" to="100" dur="3s" begin="0.6s" repeatCount="indefinite"/>
+                </rect>
+                <rect x="60" y="-20" width="1" height="4" fill="yellow">
+                    <animate attributeName="y" from="-20" to="100" dur="3s" begin="0.8s" repeatCount="indefinite"/>
+                </rect>
+                <rect x="30" y="-20" width="1" height="4" fill="green">
+                    <animate attributeName="y" from="-20" to="100" dur="3s" begin="1s" repeatCount="indefinite"/>
+                </rect>
+                <rect x="80" y="-20" width="1" height="4" fill="blue">
+                    <animate attributeName="y" from="-20" to="100" dur="3s" begin="1.2s" repeatCount="indefinite"/>
+                </rect>
+                <rect x="20" y="-20" width="1" height="4" fill="yellow">
+                    <animate attributeName="y" from="-20" to="100" dur="3s" begin="1.4s" repeatCount="indefinite"/>
+                </rect>
+                <rect x="10" y="-20" width="1" height="4" fill="red">
+                    <animate attributeName="y" from="-20" to="100" dur="3s" begin="1.6s" repeatCount="indefinite"/>
+                </rect>
+                <rect x="70" y="-20" width="1" height="4" fill="green">
+                    <animate attributeName="y" from="-20" to="100" dur="3s" begin="1.8s" repeatCount="indefinite"/>
+                </rect>
+                <rect x="35" y="-20" width="1" height="4" fill="blue">
+                    <animate attributeName="y" from="-20" to="100" dur="3s" begin="2s" repeatCount="indefinite"/>
+                </rect>
+                <rect x="90" y="-20" width="1" height="4" fill="red">
+                    <animate attributeName="y" from="-20" to="100" dur="3s" begin="2.2s" repeatCount="indefinite"/>
+                </rect>
+                <rect x="55" y="-20" width="1" height="4" fill="yellow">
+                    <animate attributeName="y" from="-20" to="100" dur="3s" begin="2.4s" repeatCount="indefinite"/>
+                </rect>
+                <rect x="45" y="-20" width="1" height="4" fill="red">
+                    <animate attributeName="y" from="-20" to="100" dur="3s" begin="2.6s" repeatCount="indefinite"/>
+                </rect>
+            </g>
+        </svg>
+    );
 
     return (
-        <GamePart question={question} svgData={svgData}/>
+        <QuestionList
+            questions={questions}
+            svgData={svgData}
+            winSvg={winSvg}
+        />
     );
 }

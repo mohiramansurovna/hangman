@@ -4,6 +4,7 @@ import './globals.css';
 import {ThemeProvider} from 'next-themes';
 import ThemeChanger from '@/components/ThemeChanger';
 import Background from '@/components/Background';
+
 const geistSans = Geist({
     variable: '--font-geist-sans',
     subsets: ['latin'],
@@ -38,7 +39,7 @@ export default function RootLayout({
                     href='https://fonts.gstatic.com'
                 />
                 <link
-                    href='https://fonts.googleapis.com/css2?family=Lacquer&display=swap'
+                    href='https://fonts.googleapis.com/css2?family=Barriecito&family=Lacquer&display=swap'
                     rel='stylesheet'
                 />
             </head>

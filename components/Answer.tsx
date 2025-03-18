@@ -1,21 +1,25 @@
 'use client';
-import {Dispatch, ReactNode, SetStateAction, useState} from 'react';
+import {Dispatch, ReactNode, SetStateAction, useEffect, useState} from 'react';
 import {Question} from '@prisma/client';
 
 export default function Answer({
+    asker,
     question,
     svgData,
     setMistake,
     setWin
 }: {
+    asker: string;
     question: Question;
     svgData: ReactNode;
     setMistake:Dispatch<SetStateAction<number>>;
     setWin:Dispatch<SetStateAction<boolean>>;
 }) {
     const [result, setResult] = useState<boolean[]>(new Array(question.answer.length).fill(false));
-    const buttons = 'qwertyuiopasdfghjklzxcvbnm'.split('');
-
+    const buttons = '1234567890qwertyuiopasdfghjklzxcvbnm'.split('');
+    useEffect(()=>{
+        setResult(new Array(question.answer.length).fill(false));
+    },[question]);
     const checkAnswer = (letter: string) => {
         const answer = question.answer.split('');
         const newResult = [...result];
@@ -40,8 +44,8 @@ export default function Answer({
     return (
        
             <section className='w-1/2 h-screen flex flex-col justify-around items-center'>
-                <div>
-                    <h2 className='text-xl text-blue-500 font-semibold'>{question.asker} asks...</h2>
+                <div className='w-full min-h-20 max-h-44 px-10'>
+                    <h2 className='text-xl text-blue-500 font-semibold'>{asker} asks...</h2>
                     <h1 className='text-2xl '>"{question.question}"</h1>
                 </div>
                 <div className='flex flex-row gap-1 my-0'>
@@ -61,7 +65,7 @@ export default function Answer({
                 <div className='text-center'>
                     {buttons.map((button, i) => (
                         <span key={i}>
-                            {i === 10 || i === 19 ? <br /> : null}
+                            {i === 10|| i===20 || i === 39 ? <br /> : null}
                             <button
                                 className='border border-dashed border-blue-500 text-blue-500 font-semibold text-2xl px-3 py-1 m-2 rounded-md hover:bg-blue-500 hover:text-white'
                                 onClick={() => checkAnswer(button)}>
